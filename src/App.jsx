@@ -9,9 +9,8 @@ const api = {
 function App() {
 const [weather, setWeather] = useState();
 const [search, setSearch] = useState("");
-let styles = "bg-gradient-to-r from-yellow-300 to-sky-600 ";
-//
-//
+let styles = "bg-gradient-to-b from-yellow-300 to-sky-600";
+
 const searchPressed = () => {
   fetch(`${api.base}weather?q=${search}&units=metric&APPID=${api.key}`)
   .then((res) => res.json() )
@@ -19,30 +18,32 @@ const searchPressed = () => {
     setWeather(result);
   })
 }
-if(weather){
-  const weatherCondition = weather.weather[0].main;
-  if(weatherCondition == "Sun"){ 
-    styles = "bg-gradient-to-bl from-yellow-300 to-cyan-400";
-  }
-  if(weatherCondition == "Clouds" || weatherCondition == "Clear"){
-    const time =  new Date();
-    const hours = time.getHours();
-    if(hours > 19 || hours < 7){
-      styles = "bg-gradient-to-bl from-blue-400 to-neutral-300";
-    }else{ 
-      styles = "bg-gradient-to-bl from-amber-400 to-blue-500";
+const weatherCondition =  weather?.weather?.[0]?.main;
+
+if(weatherCondition){
+    if(weatherCondition == "Sun"){ 
+      styles = "bg-gradient-to-b from-yellow-300 to-cyan-400";
     }
-  }
-  if(weatherCondition == "Snow"){
-    styles = "bg-gradient-to-bl from-gray-200 to-blue-400";
-  }
+    if(weatherCondition == "Clouds" || weatherCondition == "Clear"){
+      const time =  new Date();
+      const hours = time.getHours();
+      if(hours > 19 || hours < 7){
+        styles = "bg-gradient-to-b from-blue-400 to-neutral-300";
+      }else{ 
+        styles = "bg-gradient-to-b from-amber-400 to-blue-500";
+      }
+    }
+    if(weatherCondition == "Snow"){
+      styles = "bg-gradient-to-b from-gray-200 to-blue-400";
+    }
+    
+    if(weatherCondition == "Rain" || weatherCondition == "Drizzle"){
+      styles = "bg-gradient-to-t from-neutral-400 to-sky-900";        
+    }
+    if( weatherCondition == "Thunderstorm"){
+      styles = "bg-gradient-to-t from-gray-800 to-blue-900";  
+    }
   
-  if(weatherCondition == "Rain" || weatherCondition == "Drizzle"){
-    styles = "bg-gradient-to-bl from-gray-900 to-blue-900";        
-  }
-  if( weatherCondition == "Thunderstorm"){
-    styles = "bg-gradient-to-bl from-amber-500 via-blue-900 to-blue-500";  
-  }
 }
 const dayDate = () => {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -74,14 +75,12 @@ const temperatureConvert = () => {
 const weatherImage = () => {
   const time =  new Date();
   const hours = time.getHours();
-  
-  const weatherImage =  weather.weather[0].main;
 
-  if( weatherImage == "Snow"){
+  if( weatherCondition == "Snow"){
     const url = "./src/assets/snow.png";
     return(url);
   }
-  if( weatherImage == "Clouds" || weatherImage == "Clear"){
+  if( weatherCondition == "Clouds" || weatherCondition == "Clear"){
     if(hours > 19 || hours < 7){
       const url = "./src/assets/clear.png";
       return(url);
@@ -90,15 +89,15 @@ const weatherImage = () => {
       return(url);
     }
   }
-  if( weatherImage == "Sun"){
+  if( weatherCondition == "Sun"){
     const url = "./src/assets/sun.png";
     return(url);
   }
-  if( weatherImage == "Rain" || weatherImage == "Drizzle"){
+  if( weatherCondition == "Rain" || weatherCondition == "Drizzle"){
     const url = "./src/assets/rain.png";
     return(url);
   }
-  if( weatherImage == "Thunderstorm"){
+  if( weatherCondition == "Thunderstorm"){
     const url = "./src/assets/rain_thunderstorm.png";
     return(url);
   }
