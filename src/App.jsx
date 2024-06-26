@@ -133,30 +133,18 @@ function App() {
   };
   const sunriseConvert = () => {
     let unix_timestamp = weather.sys.sunrise;
-
     let date = new Date(unix_timestamp * 1000);
-
     let hours = date.getHours();
-
     let minutes = "0" + date.getMinutes();
-
-    let seconds = "0" + date.getSeconds();
-
     let formattedTime = hours + ":" + minutes.substr(-2);
 
     return formattedTime;
   };
   const sunsetConvert = () => {
     let unix_timestamp = weather.sys.sunset;
-
     let date = new Date(unix_timestamp * 1000);
-
     let hours = date.getHours();
-
     let minutes = "0" + date.getMinutes();
-
-    let seconds = "0" + date.getSeconds();
-
     let formattedTime = hours + ":" + minutes.substr(-2);
 
     return formattedTime;
