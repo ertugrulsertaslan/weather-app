@@ -93,8 +93,10 @@ function App() {
   const Messsage = () => {
     const time = new Date();
     const hours = time.getHours();
-    if (hours > 19 || hours < 7) {
+    if (hours >= 19 || hours <= 7) {
       return "Good Night";
+    } else if (hours >= 12 || hours <= 18) {
+      return "Good Afternoon";
     } else {
       return "Good Morning";
     }
@@ -138,8 +140,11 @@ function App() {
     let unix_timestamp = weather ? weather.sys.sunrise : "";
     let date = new Date(unix_timestamp * 1000);
     let hours = date.getHours();
+    if (hours < 10) {
+      hours = "0" + date.getHours();
+    }
     let minutes = "0" + date.getMinutes();
-    let formattedTime = hours + ":" + minutes.substr(-2);
+    let formattedTime = hours + ":" + minutes.slice(-2);
 
     return formattedTime;
   };
@@ -147,8 +152,11 @@ function App() {
     let unix_timestamp = weather ? weather.sys.sunset : "";
     let date = new Date(unix_timestamp * 1000);
     let hours = date.getHours();
+    if (hours < 10) {
+      hours = "0" + date.getHours();
+    }
     let minutes = "0" + date.getMinutes();
-    let formattedTime = hours + ":" + minutes.substr(-2);
+    let formattedTime = hours + ":" + minutes.slice(-2);
 
     return formattedTime;
   };
@@ -172,7 +180,9 @@ function App() {
               />
             </div>
             <div className="mt-3 ml-4">
-              <h2 className="m-0 text-white mb-1 text-2xl">{Messsage()}</h2>
+              <h2 className="m-0 text-white mb-1 mt-2 text-2xl font-bold">
+                {Messsage()}
+              </h2>
             </div>
           </header>
 
