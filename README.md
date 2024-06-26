@@ -33,6 +33,21 @@ Prerequisites
  ```sh 
   npm i
 ```
+ **Creating the .env File:** ⚙️
+   - Start by copying the `.env.example` file and creating a new file named `.env`.
+   - Make sure to fill in the contents of the `.env` file.
+
+ ```sh 
+  VITE_SOME_KEY=myapikey
+  VITE_SOME_BASE=myapibase
+
+```
+ -  Import the `.env` file to where you use it
+ ```sh 
+  const { VITE_SOME_KEY, VITE_SOME_BASE } = import.meta.env;
+
+```
+
 📡 To run development server use dev script
  ```sh 
   npm run dev
