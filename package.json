@@ -27,5 +27,10 @@
     "postcss": "^7.0.39",
     "tailwindcss": "^3.4.3",
     "vite": "^5.1.6"
-  }
+  },
+  "description": "This React-based weather application allows users to check the current weather conditions of any desired location. The app dynamically changes background color and images based on the weather: sunny days display a sunny background with clear skies, while rainy days show a cloudy background with rain clouds.",
+  "main": "postcss.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

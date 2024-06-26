@@ -14,8 +14,9 @@ const api = {
 
 function App() {
   const { enqueueSnackbar } = useSnackbar();
-  const [weather, setWeather] = useState();
+  const [weather, setWeather] = useState("");
   const [search, setSearch] = useState("");
+  const [weatherCondition, SetWeatherCondition] = useState("");
   let styles = "bg-gradient-to-b from-yellow-300 to-sky-600";
 
   const searchPressed = () => {
@@ -35,7 +36,10 @@ function App() {
         });
       });
   };
-  const weatherCondition = weather?.weather?.[0]?.main;
+
+  useEffect(() => {
+    SetWeatherCondition(weather?.weather?.[0]?.main);
+  }, [searchPressed]);
 
   if (weatherCondition) {
     if (weatherCondition == "Sun") {
@@ -81,7 +85,6 @@ function App() {
     }
     const dateHours = +hours + ":" + minutes;
 
-    console.log(minutes);
     const date = days[day] + " " + month + " " + dateHours;
 
     return date;
@@ -97,7 +100,7 @@ function App() {
     }
   };
   const temperatureConvert = () => {
-    let x = weather.main.temp;
+    let x = weather ? weather.main.temp : "";
     let int_part = Math.trunc(x);
     return int_part;
   };
@@ -132,7 +135,7 @@ function App() {
     }
   };
   const sunriseConvert = () => {
-    let unix_timestamp = weather.sys.sunrise;
+    let unix_timestamp = weather ? weather.sys.sunrise : "";
     let date = new Date(unix_timestamp * 1000);
     let hours = date.getHours();
     let minutes = "0" + date.getMinutes();
@@ -141,7 +144,7 @@ function App() {
     return formattedTime;
   };
   const sunsetConvert = () => {
-    let unix_timestamp = weather.sys.sunset;
+    let unix_timestamp = weather ? weather.sys.sunset : "";
     let date = new Date(unix_timestamp * 1000);
     let hours = date.getHours();
     let minutes = "0" + date.getMinutes();
@@ -152,7 +155,7 @@ function App() {
   return (
     <div className="bg-gray-100 flex items-center justify-center min-h-screen">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
-        <div className={`${styles} w-full border-2 p-2`}>
+        <div className={`${styles} w-full p-2`}>
           <header>
             <div className="w-auto h-auto flex relative">
               <button onClick={searchPressed} className="mt-1 ml-3 mr-1">
@@ -172,157 +175,89 @@ function App() {
               <h2 className="m-0 text-white mb-1 text-2xl">{Messsage()}</h2>
             </div>
           </header>
-          {typeof weather !== "undefined" ? (
-            <div>
-              <div className="text-center justify-center mt-3">
-                <img
-                  className="w-3/5 h-auto ml-24"
-                  src={weatherImage()}
-                  alt=""
-                />
-                <h2 className="m-0 text-white text-6xl mt-3 mb-1">
-                  {temperatureConvert() + "°C"}
-                </h2>
-                <h4 className="m-0 text-white mb-1">{weather.name}</h4>
-                <h2 className="m-0 text-white mb-1">
-                  {weather.weather[0].main}
-                </h2>
-                <h4 className="m-0 text-white mb-1">
-                  {weather.weather[0].description}
-                </h4>
-                <p className="m-0 text-white">{dayDate()}</p>
-              </div>
-              <div className="mt-10">
-                <div className="flex mb-5">
-                  <div className="flex ml-3 ">
-                    <div>
-                      <img
-                        className="w-12 mr-3 ml-8"
-                        src="./src/assets/sun.png"
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <p className="mt-3 mb-1 text-white">Sunrise</p>
-                      <p className="m-0 text-white">{sunriseConvert()}</p>
-                    </div>
+
+          <div>
+            <div className="text-center justify-center mt-3">
+              <img
+                className="w-3/5 h-auto ml-24"
+                src={weather ? weatherImage() : "./src/assets/sun_wind.png"}
+                alt=""
+              />
+              <h2 className="m-0 text-white text-6xl mt-3 mb-1">
+                {temperatureConvert() + "°C"}
+              </h2>
+              <h4 className="m-0 text-white mb-1">
+                {weather ? weather.name : "Sun"}
+              </h4>
+              <h2 className="m-0 text-white mb-1">
+                {weather ? weather.weather[0].main : "Istanbul"}
+              </h2>
+              <h4 className="m-0 text-white mb-1">
+                {weather ? weather.weather[0].description : "Sun Wind"}
+              </h4>
+              <p className="m-0 text-white">{dayDate()}</p>
+            </div>
+            <div className="mt-10">
+              <div className="flex mb-5">
+                <div className="flex ml-3 ">
+                  <div>
+                    <img
+                      className="w-12 mr-3 ml-8"
+                      src="./src/assets/sun.png"
+                      alt=""
+                    />
                   </div>
-                  <div className="ml-32 flex">
-                    <div>
-                      <img
-                        className="w-12 mr-3"
-                        src="./src/assets/sun.png"
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <p className="mt-3 mb-1 text-white">Sunset</p>
-                      <p className="m-0 text-white">{sunsetConvert()}</p>
-                    </div>
+                  <div>
+                    <p className="mt-3 mb-1 text-white">Sunrise</p>
+                    <p className="m-0 text-white">{sunriseConvert()}</p>
                   </div>
                 </div>
-                <div className="flex mb-5">
-                  <div className="w-20 mb-3 ml-14">
-                    <p className="m-0 text-white">Feels Like</p>
+                <div className="ml-32 flex">
+                  <div>
+                    <img
+                      className="w-12 mr-3"
+                      src="./src/assets/sun.png"
+                      alt=""
+                    />
+                  </div>
+                  <div>
+                    <p className="mt-3 mb-1 text-white">Sunset</p>
+                    <p className="m-0 text-white">{sunsetConvert()}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex mb-5">
+                <div className="w-20 mb-3 ml-14">
+                  <p className="m-0 text-white">Feels Like</p>
+                  <h4 className="m-0 text-white mb-1">
+                    {weather ? weather.main.feels_like + "°F" : "24 °F"}
+                  </h4>
+                </div>
+                <div className="ml-32">
+                  <div className="mb-5 ml-8">
+                    <p className="m-0 text-white">Humidity</p>
                     <h4 className="m-0 text-white mb-1">
-                      {weather.main.feels_like + "°F"}
+                      {weather ? weather.main.humidity + "%" : "64%"}
                     </h4>
                   </div>
-                  <div className="ml-32">
-                    <div className="mb-5 ml-8">
-                      <p className="m-0 text-white">Humidity</p>
-                      <h4 className="m-0 text-white mb-1">
-                        {weather.main.humidity + "%"}
-                      </h4>
-                    </div>
-                  </div>
                 </div>
-                <div className="flex mb-5">
-                  <div className="w-20 mb-3 ml-14">
-                    <p className="m-0 text-white">Precipitation</p>
-                    <h4 className="m-0 text-white mb-1">87%</h4>
-                  </div>
-                  <div className="ml-32">
-                    <div className="mb-5 ml-8">
-                      <p className="m-0 text-white">Wind Speed</p>
-                      <h4 className="m-0 text-white mb-1">
-                        {weather.wind.speed + " Km/h"}{" "}
-                      </h4>
-                    </div>
+              </div>
+              <div className="flex mb-5">
+                <div className="w-20 mb-3 ml-14">
+                  <p className="m-0 text-white">Precipitation</p>
+                  <h4 className="m-0 text-white mb-1">87%</h4>
+                </div>
+                <div className="ml-32">
+                  <div className="mb-5 ml-8">
+                    <p className="m-0 text-white">Wind Speed</p>
+                    <h4 className="m-0 text-white mb-1">
+                      {weather ? weather.wind.speed + " Km/h" : "12.2 Km/h"}
+                    </h4>
                   </div>
                 </div>
               </div>
             </div>
-          ) : (
-            <div>
-              <div className=" text-center justify-center mt-3">
-                <img
-                  className="w-3/5 h-auto ml-24"
-                  src="./src/assets/sun_wind.png"
-                  alt=""
-                />
-                <h2 className="m-0 text-white text-6xl mt-3 mb-1">°C</h2>
-                <h4 className="m-0 text-white mb-1">THUNDERSTORM</h4>
-                <h2 className="m-0 text-white mb-1">Sun</h2>
-                <h4 className="m-0 text-white mb-1">few clouds</h4>
-                <p className="m-0 text-white">Friday 16 - 09.41am</p>
-              </div>
-              <div className="mt-10">
-                <div className="flex mb-5">
-                  <div className="flex ml-3 ">
-                    <div>
-                      <img
-                        className="w-12 mr-3 ml-8"
-                        src="./src/assets/sun.png"
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <p className="mt-3 mb-1 text-white">Sunrise</p>
-                      <p className="m-0 text-white">5.34am</p>
-                    </div>
-                  </div>
-                  <div className="ml-32 flex">
-                    <div>
-                      <img
-                        className="w-12 mr-3"
-                        src="./src/assets/sun.png"
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <p className="mt-3 mb-1 text-white">Sunset</p>
-                      <p className="m-0 text-white">18.38pm</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex mb-5">
-                  <div className="w-20 mb-3 ml-14">
-                    <p className="m-0 text-white">Feels Like</p>
-                    <h4 className="m-0 text-white mb-1">15°C</h4>
-                  </div>
-                  <div className="ml-32">
-                    <div className="mb-5 ml-8">
-                      <p className="m-0 text-white">Humidity</p>
-                      <h4 className="m-0 text-white mb-1">87%</h4>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex mb-5">
-                  <div className="w-20 mb-3 ml-14">
-                    <p className="m-0 text-white">Precipitation</p>
-                    <h4 className="m-0 text-white mb-1">87%</h4>
-                  </div>
-                  <div className="ml-32">
-                    <div className="mb-5 ml-8">
-                      <p className="m-0 text-white">Wind Speed</p>
-                      <h4 className="m-0 text-white mb-1">15 Km/h </h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
