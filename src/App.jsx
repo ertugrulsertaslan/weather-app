@@ -177,7 +177,7 @@ function App() {
                 id="search"
                 className="relative z-10 bg-transparent w-10 h-10 rounded-full border cursor-pointer outline-none
             pl-12
-            focus:w-full focus:border-lime-300 focus:cursor-text focus:pl-16 focus:pr-4"
+            focus:w-full focus:border-white focus:cursor-text focus:pl-16 focus:pr-4"
               />
             </div>
             <div className="mt-3 ml-4">
