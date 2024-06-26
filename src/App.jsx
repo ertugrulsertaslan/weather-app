@@ -73,10 +73,15 @@ function App() {
     ];
     const time = new Date();
     const hours = time.getHours();
-    const minutes = time.getMinutes();
+    let minutes = time.getMinutes();
     const month = time.getMonth();
     const day = time.getDay();
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
     const dateHours = +hours + ":" + minutes;
+
+    console.log(minutes);
     const date = days[day] + " " + month + " " + dateHours;
 
     return date;
@@ -270,6 +275,8 @@ function App() {
                 />
                 <h2 className="m-0 text-white text-6xl mt-3 mb-1">°C</h2>
                 <h4 className="m-0 text-white mb-1">THUNDERSTORM</h4>
+                <h2 className="m-0 text-white mb-1">Sun</h2>
+                <h4 className="m-0 text-white mb-1">few clouds</h4>
                 <p className="m-0 text-white">Friday 16 - 09.41am</p>
               </div>
               <div className="mt-10">
