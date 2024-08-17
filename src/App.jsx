@@ -160,111 +160,97 @@ function App() {
 
     return formattedTime;
   };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      searchPressed();
+    }
+  };
   return (
-    <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
-        <div className={`${styles} w-full p-2`}>
+    <div className="container mx-auto items-center text-center justify-center flex flex-col h-full">
+      <div
+        className={`${styles} w-full md:w-10/12 lg:w-1/2 xl:w-2/5 2xl:w-1/3 p-2 min-h-screen`}
+      >
+        <div className="w-full ">
           <header>
-            <div className="w-auto h-auto flex relative">
-              <button onClick={searchPressed} className="mt-1 ml-3 mr-1">
-                <img src="./src/assets/search_btn.png" alt="" />
-              </button>
+            <div className="flex">
               <input
                 onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={handleKeyDown}
                 type="search"
                 name="search"
                 id="search"
-                className="relative z-10 bg-transparent w-10 h-10 rounded-full border cursor-pointer outline-none
-            pl-12
-            focus:w-full focus:border-white focus:cursor-text focus:pl-16 focus:pr-4"
+                className="bg-transparent w-full h-10 rounded-full border cursor-pointer outline-none pl-4 pr-4 mt-2"
               />
+              <button onClick={searchPressed} className="mt-1 ml-3 mr-1">
+                <img src="./src/assets/search_btn.png" alt="" />
+              </button>
             </div>
-            <div className="mt-3 ml-4">
-              <h2 className="m-0 text-white mb-1 mt-2 text-2xl font-bold">
-                {Messsage()}
-              </h2>
-            </div>
+            <h2 className="text-white mb-1 mt-3 ml-5 text-2xl text-left font-bold">
+              {Messsage()}
+            </h2>
           </header>
-
-          <div>
-            <div className="text-center justify-center mt-3">
+          <main>
+            <div className="flex-col flex justify-center items-center text-center text-white space-y-1">
               <img
-                className="w-3/5 h-auto ml-24"
+                className="w-56 mt-2"
                 src={weather ? weatherImage() : "./src/assets/sun_wind.png"}
                 alt=""
               />
-              <h2 className="m-0 text-white text-6xl mt-3 mb-1">
-                {temperatureConvert() + "°C"}
-              </h2>
-              <h4 className="m-0 text-white mb-1">
-                {weather ? weather.name : "Sun"}
-              </h4>
-              <h2 className="m-0 text-white mb-1">
-                {weather ? weather.weather[0].main : "Istanbul"}
-              </h2>
-              <h4 className="m-0 text-white mb-1">
-                {weather ? weather.weather[0].description : "Sun Wind"}
-              </h4>
-              <p className="m-0 text-white">{dayDate()}</p>
+              <h1 className="text-5xl">{temperatureConvert() + "°C"}</h1>
+              <h4>{weather ? weather.name : "Sun"}</h4>
+              <h2>{weather ? weather.weather[0].main : "Istanbul"}</h2>
+              <h4>{weather ? weather.weather[0].description : "Sun Wind"}</h4>
+              <p>{dayDate()}</p>
             </div>
-            <div className="mt-10">
-              <div className="flex mb-5">
-                <div className="flex ml-3 ">
-                  <div>
-                    <img
-                      className="w-12 mr-3 ml-8"
-                      src="./src/assets/sun.png"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p className="mt-3 mb-1 text-white">Sunrise</p>
-                    <p className="m-0 text-white">{sunriseConvert()}</p>
-                  </div>
-                </div>
-                <div className="ml-32 flex">
-                  <div>
-                    <img
-                      className="w-12 mr-3"
-                      src="./src/assets/sun.png"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p className="mt-3 mb-1 text-white">Sunset</p>
-                    <p className="m-0 text-white">{sunsetConvert()}</p>
-                  </div>
+          </main>
+          <div className="space-y-5 mt-4">
+            <div className="grid grid-cols-4 text-white">
+              <div className="col-span-2 flex justify-center">
+                <img
+                  className="w-12 h-12 mt-2 sm:w-16 sm:h-16 mr-3"
+                  src="./src/assets/sun.png"
+                  alt=""
+                />
+                <div>
+                  <p className="mt-3 mb-1">Sunrise</p>
+                  <p>{sunriseConvert()}</p>
                 </div>
               </div>
-              <div className="flex mb-5">
-                <div className="w-20 mb-3 ml-14">
-                  <p className="m-0 text-white">Feels Like</p>
-                  <h4 className="m-0 text-white mb-1">
-                    {weather ? weather.main.feels_like + "°F" : "24 °F"}
-                  </h4>
-                </div>
-                <div className="ml-32">
-                  <div className="mb-5 ml-8">
-                    <p className="m-0 text-white">Humidity</p>
-                    <h4 className="m-0 text-white mb-1">
-                      {weather ? weather.main.humidity + "%" : "64%"}
-                    </h4>
-                  </div>
+              <div className="col-span-2 flex justify-center">
+                <img
+                  className="w-12 h-12 mt-2 sm:w-16 sm:h-16 mr-3"
+                  src="./src/assets/sun.png"
+                  alt=""
+                />
+                <div>
+                  <p className="mt-3 mb-1 text-white">Sunset</p>
+                  <p className="m-0 text-white">{sunsetConvert()}</p>
                 </div>
               </div>
-              <div className="flex mb-5">
-                <div className="w-20 mb-3 ml-14">
-                  <p className="m-0 text-white">Precipitation</p>
-                  <h4 className="m-0 text-white mb-1">87%</h4>
-                </div>
-                <div className="ml-32">
-                  <div className="mb-5 ml-8">
-                    <p className="m-0 text-white">Wind Speed</p>
-                    <h4 className="m-0 text-white mb-1">
-                      {weather ? weather.wind.speed + " Km/h" : "12.2 Km/h"}
-                    </h4>
-                  </div>
-                </div>
+            </div>
+            <div className="grid grid-cols-4 text-white">
+              <div className="col-span-2 flex-col justify-center mt-2">
+                <p>Feels Like</p>
+                <p className="m-0 text-white mb-1">
+                  {weather ? weather.main.feels_like + "°F" : "24 °F"}
+                </p>
+              </div>
+              <div className="col-span-2 flex-col justify-center mt-2">
+                <p>Humidity</p>
+                <p className="m-0 text-white mb-1">
+                  {weather ? weather.main.humidity + "%" : "64%"}
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 text-white">
+              <div className="col-span-2 flex flex-col justify-center mt-2">
+                <p>Precipitation</p>
+                <p>87%</p>
+              </div>
+              <div className="col-span-2 flex flex-col justify-center">
+                <p>Wind Speed</p>
+                <p>{weather ? weather.wind.speed + " Km/h" : "12.2 Km/h"}</p>
               </div>
             </div>
           </div>
