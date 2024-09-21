@@ -2,6 +2,17 @@
 
 This React-based weather application allows users to check the current weather conditions of any desired location. The app dynamically changes background color and images based on the weather: sunny days display a sunny background with clear skies, while rainy days show a cloudy background with rain clouds.
 
+  ## Demo  🌐
+ [weather-app.netlify.app](https://weather-app-wap.netlify.app) 
+
+## Screenshots 📸
+<div style="display: flex; flex-direction: row;">
+    <img src="screenshots/suny-day.png" alt="sun" style="width: 30%; margin-right: 4%;">
+    <img src="screenshots/rainy-day.png" alt="rain" style="width: 30%; margin-right: 4%;">
+    <img src="screenshots/thunderstorm-day.png" alt="thunderstorm" style="width: 30%; margin-right: 4%;">
+</div>
+
+
 ## Features 🌟
 
 - 🖥️ User-friendly interface
@@ -58,16 +69,10 @@ Prerequisites
 ```
 after running scripts go to `http://localhost:5173` with your browser to use the app. 🌐
 
-  ## Demo  🌐
- [weather-app.netlify.app](https://weather-app-wap.netlify.app) 
 
 
-## Screenshots 📸
-<div style="display: flex; flex-direction: row;">
-    <img src="screenshots/suny-day.png" alt="sun" style="width: 30%; margin-right: 4%;">
-    <img src="screenshots/rainy-day.png" alt="rain" style="width: 30%; margin-right: 4%;">
-    <img src="screenshots/thunderstorm-day.png" alt="thunderstorm" style="width: 30%; margin-right: 4%;">
-</div>
+
+
 
 
 
